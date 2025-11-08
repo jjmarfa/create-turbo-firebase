@@ -18,17 +18,15 @@ A CLI tool to quickly scaffold a Firebase + Turborepo monorepo project with best
 Run directly from this GitHub repository using npx:
 
 ```bash
-npx github:yourusername/turbo-firebase-base my-app
+npx github:jjmarfa/create-turbo-firebase my-app
 ```
 
 Or use a specific branch/tag:
 
 ```bash
-npx github:yourusername/turbo-firebase-base#main my-app
-npx github:yourusername/turbo-firebase-base#v1.0.0 my-app
+npx github:jjmarfa/create-turbo-firebase#main my-app
+npx github:jjmarfa/create-turbo-firebase#v1.0.0 my-app
 ```
-
-> **Note:** Replace `yourusername` with your actual GitHub username.
 
 ### Using from npm (If published)
 
@@ -57,7 +55,7 @@ pnpm create turbo-firebase my-app
 ## Options
 
 ```bash
-npx github:yourusername/turbo-firebase-base [project-name] [options]
+npx github:jjmarfa/create-turbo-firebase [project-name] [options]
 ```
 
 **Options:**
