@@ -92,11 +92,16 @@ async function copyFile(
   // Transform package.json files
   if (fileName === 'package.json') {
     try {
-      const pkg = JSON.parse(content);
-      // Only update name for root package.json
+      let pkg = JSON.parse(content);
+
+      // Update root package.json name
       if (source.includes('template' + path.sep + 'package.json')) {
         pkg.name = config.projectName;
       }
+
+      // Replace package scopes (@urinvited and @repo) with the project name
+      pkg = replacePackageScopes(pkg, config.projectName);
+
       content = JSON.stringify(pkg, null, 2) + '\n';
     } catch (error) {
       // If parsing fails, just copy as-is
@@ -105,6 +110,31 @@ async function copyFile(
 
   // Write file
   await fs.writeFile(destination, content, 'utf-8');
+}
+
+/**
+ * Recursively replace @urinvited and @repo scopes with the project name
+ */
+function replacePackageScopes(obj: any, projectName: string): any {
+  if (typeof obj === 'string') {
+    // Replace both @urinvited/* and @repo/* with @projectName/*
+    return obj.replace(/@urinvited\//g, `@${projectName}/`)
+              .replace(/@repo\//g, `@${projectName}/`);
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(item => replacePackageScopes(item, projectName));
+  }
+
+  if (obj !== null && typeof obj === 'object') {
+    const result: any = {};
+    for (const [key, value] of Object.entries(obj)) {
+      result[key] = replacePackageScopes(value, projectName);
+    }
+    return result;
+  }
+
+  return obj;
 }
 
 async function updatePackageJson(config: ProjectConfig): Promise<void> {
