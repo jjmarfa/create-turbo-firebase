@@ -1,0 +1,52 @@
+{
+  "name": "create-turbo-firebase",
+  "version": "0.1.0",
+  "description": "Create a new Firebase + Turborepo project with a single command",
+  "type": "module",
+  "bin": {
+    "create-turbo-firebase": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "template"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.cli.json",
+    "dev": "tsc -p tsconfig.cli.json --watch",
+    "prepack": "npm run build",
+    "test:local": "node dist/index.js"
+  },
+  "keywords": [
+    "firebase",
+    "turborepo",
+    "monorepo",
+    "template",
+    "scaffold",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/turbo-firebase-base.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "inquirer": "^9.2.15",
+    "ora": "^8.0.1",
+    "chalk": "^5.3.0",
+    "fs-extra": "^11.2.0",
+    "execa": "^8.0.1",
+    "validate-npm-package-name": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.11.19",
+    "@types/validate-npm-package-name": "^4.0.2",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

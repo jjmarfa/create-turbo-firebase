@@ -1,0 +1,17 @@
+# Source files
+src/
+tsconfig.json
+
+# Development
+node_modules/
+*.log
+.DS_Store
+
+# Testing
+coverage/
+*.test.ts
+*.spec.ts
+
+# Only include built files and template
+!dist/
+!template/
