@@ -22,7 +22,7 @@
   "dependencies": {
     "firebase-admin": "^12.6.0",
     "firebase-functions": "^6.0.1",
-    "@urinvited/common": "*"
+    "@repo/common": "*"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

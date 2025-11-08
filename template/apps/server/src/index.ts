@@ -9,7 +9,7 @@
 
 import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
-import type { IUser } from "@urinvited/common";
+import type { IUser } from "@repo/common";
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript

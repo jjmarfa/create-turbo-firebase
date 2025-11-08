@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import logo from '../logo.svg'
-import type { IUser } from '@urinvited/common';
+import type { IUser } from '@repo/common';
 
 export const Route = createFileRoute('/')({
   component: App,
