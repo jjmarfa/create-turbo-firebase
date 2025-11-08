@@ -117,16 +117,53 @@ function getRunCommand(config) {
 export async function initializeGit(projectPath) {
     const spinner = ora('Initializing git repository...').start();
     try {
+        // Check if git is available
+        try {
+            await execa('git', ['--version']);
+        }
+        catch {
+            spinner.fail('Git is not installed');
+            logWarning('Please install git to use version control');
+            return;
+        }
+        // Initialize git repository
         await execa('git', ['init'], { cwd: projectPath });
+        // Add all files
         await execa('git', ['add', '.'], { cwd: projectPath });
-        await execa('git', ['commit', '-m', 'Initial commit from create-turbo-firebase'], {
-            cwd: projectPath
-        });
-        spinner.succeed('Git repository initialized');
+        // Try to create initial commit
+        try {
+            await execa('git', ['commit', '-m', 'Initial commit from create-turbo-firebase'], {
+                cwd: projectPath
+            });
+            spinner.succeed('Git repository initialized with initial commit');
+        }
+        catch (commitError) {
+            // Commit might fail if git user is not configured
+            // Check if it's a user config issue
+            try {
+                await execa('git', ['config', 'user.name'], { cwd: projectPath });
+                await execa('git', ['config', 'user.email'], { cwd: projectPath });
+                // User is configured, but commit failed for another reason
+                throw commitError;
+            }
+            catch {
+                // User not configured, set local config and try again
+                await execa('git', ['config', 'user.name', 'create-turbo-firebase'], { cwd: projectPath });
+                await execa('git', ['config', 'user.email', 'create-turbo-firebase@example.com'], { cwd: projectPath });
+                await execa('git', ['commit', '-m', 'Initial commit from create-turbo-firebase'], {
+                    cwd: projectPath
+                });
+                spinner.succeed('Git repository initialized with initial commit');
+                logInfo('Note: Git user was configured locally for this repository');
+            }
+        }
     }
     catch (error) {
         spinner.fail('Failed to initialize git repository');
-        logWarning('You can initialize git manually later');
+        if (error instanceof Error) {
+            logWarning(`Error: ${error.message}`);
+        }
+        logWarning('You can initialize git manually later with: git init');
     }
 }
 //# sourceMappingURL=firebase-setup.js.map
