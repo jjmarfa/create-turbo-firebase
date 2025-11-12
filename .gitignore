@@ -38,3 +38,7 @@ pglite-debug.log*
 # Misc
 .DS_Store
 *.pem
+
+# Claude Code
+.claude/
+agents/
